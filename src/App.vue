@@ -26,11 +26,9 @@ function sortUsersByAge() {
   users.value.sort((a, b) => a.age - b.age)
 }
 
-
 function hideInactiveUsers() {
   users.value = users.value.filter((user) => user.isActive)
 }
-
 
 function showFirstTwoUsers() {
   users.value = users.value.slice(0, 2)
@@ -43,3 +41,4 @@ function showFirstTwoUsers() {
   text-decoration: line-through;
 }
 </style>
+
