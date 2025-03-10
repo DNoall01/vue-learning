@@ -40,7 +40,7 @@ let posts = ref([
   }
 ])
 
-// The second argument from the BlogPost’s emit method will be passed as the first parameter of this method.
+
 function processDeletion(id) {
   let index = posts.value.findIndex((item) => item.id == id)
   posts.value.splice(index, 1)
