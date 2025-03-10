@@ -3,10 +3,10 @@
     <p>
       {{ message }}
     </p>
-    <!-- Display the id, title, and content of a blog post. -->
     <h2>{{ id }} - {{ blogPostTitle }}</h2>
     <h4>{{ blogPostContent }}</h4>
-    <button @click="changeBlogPostTitle">Change blog post title</button>
+    <button @click="$emit('delete-blog-post', id)">Delete post</button>
+    <button @click="emitDeletePostEvent(id)">Delete post</button> <!-- Best Practice -->
   </div>
 </template>
 
@@ -14,9 +14,11 @@
 import { ref } from 'vue'
 
 let message = ref('This is the BlogPost component.')
-const props = defineProps(['id', 'blogPostTitle', 'blogPostContent'])
-function changeBlogPostTitle() {
-  props.blogPostTitle = 'A different title'
+defineProps(['id', 'blogPostTitle', 'blogPostContent'])
+const emit = defineEmits(['delete-blog-post'])
+
+function emitDeletePostEvent(id) {
+  emit('delete-blog-post', id)
 }
 </script>
 
