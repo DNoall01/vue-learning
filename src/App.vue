@@ -2,7 +2,9 @@
   <BlogPost
     v-for="post in posts"
     :key="post.id"
-    v-bind="post"
+    :id="post.id"
+    v-model:blogPostTitle="post.blogPostTitle"
+    v-model:blogPostContent="post.blogPostContent"
     @delete-blog-post="processDeletion"
   ></BlogPost>
 </template>
@@ -38,11 +40,11 @@ let posts = ref([
   }
 ])
 
+// The second argument from the BlogPost’s emit method will be passed as the first parameter of this method.
 function processDeletion(id) {
   let index = posts.value.findIndex((item) => item.id == id)
   posts.value.splice(index, 1)
 }
 </script>
 
-<style scoped></style>
 <style scoped></style>
