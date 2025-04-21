@@ -13,6 +13,18 @@ import { isAuthenticated } from '@/apis/auth'
 
 const router = createRouter({
   history: createWebHistory(),
+  scrollBehavior(to, from, savedPosition) {
+    const scrollBehaviorOptions = {
+      top: 0,
+      behavior: 'smooth',
+    }
+
+    if (to.meta.scrollToElement) {
+      scrollBehaviorOptions.el = to.meta.scrollToElement
+    }
+
+    return savedPosition ?? scrollBehaviorOptions
+  },
   routes: [
     {
       path: '/',
@@ -30,6 +42,10 @@ const router = createRouter({
           path: '/blogPosts',
           name: 'blogPosts',
           component: BlogPosts,
+          meta: {
+            enterAnimation: 'animate__animated animate__bounceIn',
+            leaveAnimation: 'animate__animated animate__bounceOut',
+          },
           redirect: { name: 'blogPostsGreeting' },
           children: [
             {
@@ -45,7 +61,10 @@ const router = createRouter({
                 default: BlogPost,
                 sidebar: Ads,
               },
-              meta: { requiresAuth: true },
+              meta: {
+                requiresAuth: true,
+                scrollToElement: '.blog-posts-layout',
+              },
             },
           ],
         },
@@ -78,7 +97,6 @@ router.beforeEach((to, from) => {
     return { name: 'login', query: { redirect: to.fullPath } }
   }
 })
-
 
 router.afterEach((to, from) => {
   console.log(`Successfully navigated to: ${to.fullPath}`)
