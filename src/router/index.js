@@ -1,14 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Home from '@/views/Home.vue'
-import BlogPosts from '@/views/BlogPosts.vue'
-import About from '@/views/About.vue'
-import BlogPost from '@/views/BlogPost.vue'
-import BlogPostsGreeting from '@/views/BlogPostsGreeting.vue'
-import NotFound from '@/views/NotFound.vue'
-import Ads from '@/views/Ads.vue'
-import Login from '@/views/Login.vue'
-import MainLayout from '@/views/MainLayout.vue'
 import { isAuthenticated } from '@/apis/auth'
 
 const router = createRouter({
@@ -29,19 +20,19 @@ const router = createRouter({
     {
       path: '/',
       name: 'mainLayout',
-      component: MainLayout,
+      component: () => import('@/views/MainLayout.vue'),
       redirect: { name: 'home' },
       children: [
         {
           path: '/home',
           name: 'home',
-          component: Home,
+          component: () => import('@/views/Home.vue'),
           meta: { requiresAuth: false },
         },
         {
           path: '/blogPosts',
           name: 'blogPosts',
-          component: BlogPosts,
+          component: () => import('@/views/BlogPosts.vue'),
           meta: {
             enterAnimation: 'animate__animated animate__bounceIn',
             leaveAnimation: 'animate__animated animate__bounceOut',
@@ -51,15 +42,15 @@ const router = createRouter({
             {
               path: '',
               name: 'blogPostsGreeting',
-              component: BlogPostsGreeting,
+              component: () => import('@/views/BlogPostsGreeting.vue'),
               meta: { requiresAuth: false },
             },
             {
               path: '/blogPosts/:id(\\d+)',
               name: 'blogPost',
               components: {
-                default: BlogPost,
-                sidebar: Ads,
+                default: () => import('@/views/BlogPost.vue'),
+                sidebar: () => import('@/views/Ads.vue'),
               },
               meta: {
                 requiresAuth: true,
@@ -71,7 +62,7 @@ const router = createRouter({
         {
           path: '/about',
           name: 'about',
-          component: About,
+          component: () => import('@/views/About.vue'),
           meta: { requiresAuth: false },
         },
       ],
@@ -79,13 +70,13 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: Login,
+      component: () => import('@/views/Login.vue'),
       meta: { requiresAuth: false },
     },
     {
       path: '/:pathMatch(.*)*', 
       name: 'notFound',
-      component: NotFound,
+      component: () => import('@/views/NotFound.vue'),
       meta: { requiresAuth: false },
     },
   ],
